@@ -96,7 +96,7 @@ jobs:
           
       - name: Run OXSecurity image scan
         run: |
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock oxsecurity/ox-image-scanner:latest scan-image -e OX_API_KEY=${{ secrets.OX_API_KEY }} -e OX_ARTIFACT_NAME=$DOCKER_REPOSITORY/$IMAGE_NAME E -e OX_ARTIFACT_TAG=$IMAGE_TAG    
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock oxsecurity/ox-image-scanner:latest scan-image -e DOCKER_HOST=unix:///var/run/docker.sock -e OX_API_KEY=${{ secrets.OX_API_KEY }} -e OX_ARTIFACT_NAME=$DOCKER_REPOSITORY/$IMAGE_NAME E -e OX_ARTIFACT_TAG=$IMAGE_TAG    
           
       - name: Run Trivy vulnerability image scanner
         uses: aquasecurity/trivy-action@master
