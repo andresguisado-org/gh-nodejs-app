@@ -200,7 +200,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ steps.tfvars.outputs.aws_region }}
+          aws-region: 'us-east-1'
           # If you're using role assumption, uncomment and configure these lines
           # role-to-assume: ${{ secrets.EKS_ROLE_ARN }}
           # role-duration-seconds: 1200
