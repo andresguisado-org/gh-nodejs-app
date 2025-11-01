@@ -11,7 +11,7 @@ on:
 env:
    DOCKER_REPOSITORY: andresguisado # name of Docker Hub ID
    IMAGE_NAME: gh-nodejs-app
-   #CONTAINER_NAME: gh-nodejs-app #<name + first letter of your last name> e.g andresg-app
+   CONTAINER_NAME: test-app #<name + first letter of your last name> e.g andresg-app
    IMAGE_TAG: ${{ github.run_number }} # $GITHUB_RUN_NUMBER
 
 jobs:
