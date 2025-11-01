@@ -94,9 +94,9 @@ jobs:
         run: |
           sudo docker build -t $DOCKER_REPOSITORY/$IMAGE_NAME:$IMAGE_TAG .
           
-      - name: Run OXSecurity image scan
-        run: |
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock oxsecurity/ox-image-scanner:latest scan-image -e DOCKER_HOST=unix:///var/run/docker.sock -e OX_API_KEY=${{ secrets.OX_API_KEY }} -e OX_ARTIFACT_NAME=$DOCKER_REPOSITORY/$IMAGE_NAME E -e OX_ARTIFACT_TAG=$IMAGE_TAG    
+      #- name: Run OXSecurity image scan
+      #  run: |
+      #    docker run --rm -v /var/run/docker.sock:/var/run/docker.sock oxsecurity/ox-image-scanner:latest scan-image -e DOCKER_HOST=unix:///var/run/docker.sock -e OX_API_KEY=${{ secrets.OX_API_KEY }} -e OX_ARTIFACT_NAME=$DOCKER_REPOSITORY/$IMAGE_NAME E -e OX_ARTIFACT_TAG=$IMAGE_TAG    
           
       - name: Run Trivy vulnerability image scanner
         uses: aquasecurity/trivy-action@master
@@ -194,14 +194,18 @@ jobs:
     
       - name: Checkout code
         uses: actions/checkout@v4
-    
-     # - name: Setting K8s context
-     #   uses: azure/k8s-set-context@v3
-     #   with:
-     #     method: kubeconfig
-     #     kubeconfig: ${{ secrets.KUBECONFIG }}
-     #      context: emea-aguisado-test
-      
+     
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ steps.tfvars.outputs.aws_region }}
+          # If you're using role assumption, uncomment and configure these lines
+          # role-to-assume: ${{ secrets.EKS_ROLE_ARN }}
+          # role-duration-seconds: 1200
+          # role-session-name: GithubActionsSession
+          
       - name: Install kubectl
         run: |
           echo "Installing kubectl..."
