@@ -215,7 +215,7 @@ jobs:
           
       - name: Update Kube config and authenticate
         run: |
-          eks update-kubeconfig --name aws-gtm-se-testing-eks01 --region us-east-1
+          aws eks update-kubeconfig --name aws-gtm-se-testing-eks01 --region us-east-1
           
       - name: Deploying
         run: |
